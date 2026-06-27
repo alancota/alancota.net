@@ -32,8 +32,9 @@ Disclosure happens in layers, each earning the next:
    observation, not an aspiration.
 
 An **Editorial Canon** is maintained from day one as an **internal, unpublished**
-author's compass (kept out of the published site; see `docs/editorial/`, which is
-git-ignored). Every draft is checked against it for consistency.
+author's compass (kept out of the published site — untracked, outside this repo;
+see `docs/handoffs/content-architecture.md`). Every draft is checked against it for
+consistency.
 
 ## Consequences
 

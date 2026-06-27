@@ -87,16 +87,17 @@ A simple, deployable site with:
 ## Open questions
 
 - Resolved: dark-first (dark-only for now; light mode deferred). See Established Decisions.
-- Resolved: resume = static PDF (canonical artifact) served via a lightweight `/resume` hiring landing page; not generated from content. See `docs/editorial/discovery-report.md` §8.
-- Resolved: first deploy is gated on a coherent homepage ("would I send this to a hiring manager tomorrow?"), not an article count — after the flagship + one Field Note. See `docs/editorial/discovery-report.md` §3.
+- Resolved: resume = static PDF (canonical artifact) served via a lightweight `/resume` hiring landing page; not generated from content. See the editorial compass §8 (`docs/handoffs/content-architecture.md`).
+- Resolved: first deploy is gated on a coherent homepage ("would I send this to a hiring manager tomorrow?"), not an article count — after the flagship + one Field Note. See the editorial compass §3 (`docs/handoffs/content-architecture.md`).
 
 ## Content architecture (decided 2026-06-27)
 
 A content-architecture grilling session locked the editorial strategy. Durable
 decisions live in `CONTEXT.md` (glossary) and ADRs; the full evidence-grounded
 source material (flagship, ~30-article backlog, Editorial Canon, confidentiality
-rules, first-wave sequence) is the **internal, git-ignored** compass at
-`docs/editorial/discovery-report.md`.
+rules, first-wave sequence) is the **internal, untracked** compass kept outside
+this public repo (see `docs/handoffs/content-architecture.md` for its canonical
+private location).
 
 - Audience: customer-facing technical professionals (Tier 1); conversion = Continued Curiosity.
 - Spine: *"I solve hard technical problems once, then build systems that keep solving them."*
