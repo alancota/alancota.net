@@ -108,6 +108,14 @@ private location).
   once ≥2 pieces form an arc (ADR-0002); **Themes** + a **philosophy page**
   deferred until earned (ADR-0003).
 
+## Editorial craft conventions
+
+Editorial craft conventions (narrative grammar for spine pieces) are maintained in
+the **private editorial compass**, kept outside this public repo alongside the
+discovery report (`writing-conventions.md`; canonical location in
+`docs/handoffs/content-architecture.md`). Future narrative work should follow those
+conventions rather than re-deriving them.
+
 ## Risks
 
 - Over-polishing design before content exists
