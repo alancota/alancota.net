@@ -1,0 +1,17 @@
+main_branch: main
+base_branch: origin/main
+merge_strategy: rebase
+
+worktree_dir: /Volumes/ALANT9/Dev/personal/worktrees/alancota.net
+worktree_naming: basename
+worktree_prefix: "website-"
+window_prefix: "wmx-"
+mode: window
+
+panes:
+  - command: claude
+    focus: true
+  - split: horizontal
+
+pre_merge:
+  - just check
