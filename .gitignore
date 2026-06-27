@@ -1,16 +1,23 @@
+# macOS
+.DS_Store
+
 # build output
 dist/
+
 # generated types
 .astro/
+
 # dependencies
 node_modules/
+
 # logs
 npm-debug.log*
 logs/
+
 # local agent runtime/session state and locally-installed skills
-.claude/
+.claude/data/
+
 # environment
 .env
 .env.production
-# macOS
-.DS_Store
+
