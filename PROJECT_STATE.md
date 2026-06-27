@@ -4,6 +4,8 @@ Last updated: 2026-06-27
 
 ## Current milestone
 
+**Current phase:** Content Architecture (editorial foundations).
+
 Bootstrap Astro site (walking skeleton) — complete on `feat/bootstrap-astro-site`. Next: first real content and Cloudflare Pages connection.
 
 ## Current objective
@@ -85,8 +87,25 @@ A simple, deployable site with:
 ## Open questions
 
 - Resolved: dark-first (dark-only for now; light mode deferred). See Established Decisions.
-- Should resume be a static PDF in `public/resume/` or a page generated from content?
-- Should first deploy happen before content is polished, or only after one project and one field note are drafted?
+- Resolved: resume = static PDF (canonical artifact) served via a lightweight `/resume` hiring landing page; not generated from content. See `docs/editorial/discovery-report.md` §8.
+- Resolved: first deploy is gated on a coherent homepage ("would I send this to a hiring manager tomorrow?"), not an article count — after the flagship + one Field Note. See `docs/editorial/discovery-report.md` §3.
+
+## Content architecture (decided 2026-06-27)
+
+A content-architecture grilling session locked the editorial strategy. Durable
+decisions live in `CONTEXT.md` (glossary) and ADRs; the full evidence-grounded
+source material (flagship, ~30-article backlog, Editorial Canon, confidentiality
+rules, first-wave sequence) is the **internal, git-ignored** compass at
+`docs/editorial/discovery-report.md`.
+
+- Audience: customer-facing technical professionals (Tier 1); conversion = Continued Curiosity.
+- Spine: *"I solve hard technical problems once, then build systems that keep solving them."*
+- Site identity: a **Living Field Manual** (compounding), not a portfolio.
+- Career arc as narrative spine: **Builder → Architect → Teacher**.
+- Flagship: pain-first origin story, head of the "Building Octopus" Series.
+- Model: format-first (Projects, Field Notes); **Series** deferred to a collection
+  once ≥2 pieces form an arc (ADR-0002); **Themes** + a **philosophy page**
+  deferred until earned (ADR-0003).
 
 ## Risks
 
