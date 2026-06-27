@@ -45,3 +45,12 @@ A session summary that preserves important context for a future agent or future 
 
 ### ADR
 Architecture Decision Record. Use ADRs only for meaningful decisions that are hard to reverse, surprising without context, and based on real tradeoffs.
+
+### Dark-first
+The site uses a dark visual baseline as its default and only theme. The base layout and global styles assume dark background and foreground from the start. Theme switching and light-mode support are intentionally out of scope until there is a concrete need.
+
+### Content Modeling Principle
+Frontmatter describes the document (metadata used for routing, listing, sorting, and publishing). The MDX body contains the content, narrative, and document structure. Keep frontmatter intentionally small and stable; only introduce new metadata when there is a concrete architectural need.
+
+### Walking Skeleton
+The bootstrap deliverable: the thinnest end-to-end slice that proves the full pipeline (stack, routing, content model, MDX rendering, and Cloudflare-compatible build) works, without real content or visual polish.

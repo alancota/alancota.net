@@ -22,15 +22,6 @@ The site should document how Alan thinks through technical problems, builds reus
 9. **Capture durable decisions.** Create ADRs only when a decision is hard to reverse, surprising without context, and based on real tradeoffs.
 10. **Preserve context between sessions.** Update `PROJECT_STATE.md` and create handoffs under `docs/handoffs/` when useful.
 
-## Expected stack
-
-- Astro
-- TypeScript
-- Tailwind CSS
-- MDX
-- Cloudflare Pages
-- GitHub Issues for work tracking
-
 ## Content hierarchy
 
 - Home
@@ -78,3 +69,17 @@ Commit bodies should explain why the change exists, not just what files changed.
 ## Compatibility
 
 `AGENTS.md` is the canonical instruction file. Tool-specific files such as `CLAUDE.md` should point here instead of duplicating rules.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and PRDs live in GitHub Issues (`gh` CLI). External PRs are not a triage surface. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Five canonical triage roles using default label strings (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
