@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Dark-first baseline. The base layout hardcodes <html class="dark">; these
+   defaults set the dark background and foreground for every page. No theme
+   toggle in bootstrap. */
+:root {
+  color-scheme: dark;
+}
+
+html.dark {
+  background-color: #0a0a0a;
+  color: #ededed;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.6;
+}

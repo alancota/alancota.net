@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Drafts are excluded from production builds entirely — not public, not
+// linked, not generated (static sites have no access control).
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  );
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <article>
+    <h1 class="text-2xl font-semibold text-neutral-100">{entry.data.title}</h1>
+    <div class="mt-6 space-y-4 text-neutral-300">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

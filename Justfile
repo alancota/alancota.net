@@ -2,9 +2,22 @@
 default:
     just --list
 
-# Run project checks
+# Run the dev server
+dev:
+    npm run dev
+
+# Build the static site
+build:
+    npm run build
+
+# Preview the production build locally
+preview:
+    npm run preview
+
+# Canonical validation command. Currently a build only; will grow to
+# include astro check, linting, and tests as those gates are introduced.
 check:
-    echo "No checks configured yet"
+    npm run build
 
 # Create a new worktree
 wt-add *args:
