@@ -1,6 +1,6 @@
 # Development Workflow
 
-This document defines how this repository should be developed by Alan and AI coding agents.
+This document defines how this repository should be developed by Alan and AI-enabled engineering partners.
 
 ## Philosophy
 
@@ -8,9 +8,28 @@ Develop the site incrementally using small, reviewable changes.
 
 Prefer documentation before implementation, architecture before code, small vertical slices over large rewrites, reusable patterns over one-off solutions, clear content over visual polish, and reviewable branches over direct changes to `main`.
 
+This repository values durable thinking over rapid output. The website should teach how problems were solved, not merely display accomplishments.
+
+## Local development environment
+
+The reference local environment is optimized for AI-assisted engineering while remaining tool-agnostic.
+
+Preferred local tools:
+
+- Neovim for editing
+- Tmux for long-running sessions
+- WorkMux for Git worktree orchestration
+- Just for minimal local automation
+- Git worktrees for isolated tasks
+- Claude Code initially, with future compatibility for Codex CLI, Gemini CLI, and Copilot CLI
+
+These tools support the workflow, but the repository should not become tightly coupled to any single AI tool.
+
 ## Branching
 
-Do not work directly on `main` for meaningful changes. Create a branch for each focused unit of work.
+Do not work directly on `main` for meaningful changes. Keep `main` clean, synced, and deployable.
+
+Create a branch for each focused unit of work.
 
 Examples:
 
@@ -24,6 +43,29 @@ refactor/navigation
 build/cloudflare-pages
 ```
 
+## Local worktree philosophy
+
+Use Git worktrees for parallel development and AI-assisted engineering sessions.
+
+One worktree should represent:
+
+- one objective
+- one branch
+- one focused AI session or human work session
+- one pull request when practical
+
+Do not reuse a worktree for unrelated tasks. Remove worktrees after the branch is merged or abandoned.
+
+Recommended WorkMux flow:
+
+```bash
+just wt-add feat/bootstrap-astro-site
+```
+
+Common worktree commands should stay minimal and useful. Do not bloat the `Justfile` with recipes that are not used frequently.
+
+The primary checkout should usually remain on `main`. Feature work should happen in separate worktrees.
+
 ## Pull requests
 
 Every meaningful feature or documentation change should be reviewed through a pull request when practical.
@@ -32,17 +74,25 @@ A pull request should explain why the change exists, what changed, any important
 
 ## Git workflow
 
-Before starting new work:
+Before starting new work from the primary checkout:
 
 ```bash
 git checkout main
 git pull --rebase origin main
 ```
 
-Then create a feature branch:
+Then create a feature branch or worktree.
+
+Feature branch:
 
 ```bash
 git checkout -b feat/<short-description>
+```
+
+WorkMux worktree:
+
+```bash
+just wt-add feat/<short-description>
 ```
 
 ## Commit style
@@ -62,16 +112,43 @@ chore(agents): update AI workflow instructions
 
 Commit bodies should explain why the change exists, not merely list files.
 
-## AI agent workflow
+## AI session lifecycle
 
-Every AI coding session should begin by reading:
+Every AI-enabled engineering session should begin by reading:
 
 1. `AGENTS.md`
-2. `PROJECT_STATE.md`
-3. `CONTEXT.md`
-4. Relevant docs under `docs/`
+2. Tool-specific shim if present, such as `CLAUDE.md`
+3. `PROJECT_STATE.md`
+4. `CONTEXT.md`
+5. Relevant docs under `docs/`
 
-Then the agent should restate the task, identify relevant guardrails, ask clarifying questions if needed, make the smallest useful change, avoid unnecessary dependencies, run available checks, propose documentation updates if project direction changed, and leave a handoff when useful.
+Then the session should follow this lifecycle:
+
+```text
+Create focused worktree
+  ↓
+Read project guardrails
+  ↓
+Restate the task
+  ↓
+Clarify assumptions
+  ↓
+Grill/design when needed
+  ↓
+Implement the smallest useful change
+  ↓
+Run checks
+  ↓
+Update docs or PROJECT_STATE.md if needed
+  ↓
+Create handoff when useful
+  ↓
+Open PR or prepare for review
+  ↓
+Merge and remove worktree
+```
+
+The agent should identify relevant guardrails, ask clarifying questions if needed, avoid unnecessary dependencies, and propose documentation updates when project direction changes.
 
 ## First-session rule
 
@@ -94,6 +171,22 @@ docs/handoffs/
 ```
 
 A useful handoff includes the session goal, what changed, decisions made, open questions, risks, files touched, related issues or ADRs, and the recommended next step.
+
+## Justfile philosophy
+
+The `Justfile` should stay small and practical.
+
+Add recipes only when they are used frequently or remove meaningful friction from the workflow. Prefer a short list of memorable commands over a large command catalog.
+
+Good candidates for recipes:
+
+- build
+- check
+- format
+- preview
+- worktree add/remove/list
+
+Avoid adding speculative recipes before the need exists.
 
 ## Confidentiality checkpoint
 
