@@ -17,6 +17,12 @@ logs/
 # local agent runtime/session state and locally-installed skills
 .claude/data/
 
+# scratch files
+.scratch/
+
+# internal editorial compass — author guidance, not for publication
+docs/editorial/
+
 # environment
 .env
 .env.production
