@@ -85,5 +85,32 @@ const featuredDate = featured?.data.publishDate.toLocaleDateString('en-US', {
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>
     </section>
+
+    <!-- What you'll find here -->
+    <section class="mt-20 border-t border-line pt-10">
+      <p class="font-sans text-xs font-medium uppercase tracking-[0.18em] text-accent">
+        What you’ll find here
+      </p>
+      <dl class="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3">
+        <div>
+          <dt class="font-serif text-lg text-ink">Field notes</dt>
+          <dd class="mt-1 text-sm leading-relaxed text-ink-muted">
+            Realizations from customer-facing technical work.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-serif text-lg text-ink">Projects</dt>
+          <dd class="mt-1 text-sm leading-relaxed text-ink-muted">
+            Tools, labs, and experiments that make ideas concrete.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-serif text-lg text-ink">Artifacts</dt>
+          <dd class="mt-1 text-sm leading-relaxed text-ink-muted">
+            The objects, screenshots, diagrams, and photos behind the work.
+          </dd>
+        </div>
+      </dl>
+    </section>
   </div>
 </BaseLayout>
