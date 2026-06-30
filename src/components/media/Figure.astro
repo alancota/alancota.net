@@ -6,33 +6,52 @@ import type { ImageMetadata } from 'astro';
 // Pass an imported image (so Astro's pipeline optimizes it) plus required alt.
 // `caption` is optional and only renders when provided — never auto-captioned.
 // `variant` opts the figure into the prose grid's wider columns.
+// `maxWidth` caps the rendered image and centers it — use it for tall/portrait
+// images so they read as quiet evidence instead of filling the column (e.g.
+// maxWidth="22rem"). See src/assets/field-notes/README.md for sizing guidance.
 interface Props {
   src: ImageMetadata;
   alt: string;
   caption?: string;
   variant?: 'text' | 'wide' | 'full';
   priority?: boolean;
+  maxWidth?: string;
 }
 
-const { src, alt, caption, variant = 'text', priority = false } = Astro.props;
+const {
+  src,
+  alt,
+  caption,
+  variant = 'text',
+  priority = false,
+  maxWidth,
+} = Astro.props;
 
 const variantClass =
   variant === 'wide' ? 'fig-wide' : variant === 'full' ? 'fig-full' : '';
+const capped = Boolean(maxWidth);
 ---
 
 <figure class={variantClass}>
-  <Image
-    src={src}
-    alt={alt}
-    layout={variant === 'full' ? 'full-width' : 'constrained'}
-    priority={priority}
-    class="w-full border border-line"
-  />
-  {
-    caption && (
-      <figcaption class="mt-3 font-sans text-sm leading-relaxed text-ink-faint">
-        {caption}
-      </figcaption>
-    )
-  }
+  <div class={capped ? 'mx-auto' : ''} style={capped ? `max-width:${maxWidth}` : undefined}>
+    <Image
+      src={src}
+      alt={alt}
+      layout={variant === 'full' ? 'full-width' : 'constrained'}
+      priority={priority}
+      class="w-full border border-line"
+    />
+    {
+      caption && (
+        <figcaption
+          class:list={[
+            'mt-3 font-sans text-sm leading-relaxed text-ink-faint',
+            capped && 'text-center',
+          ]}
+        >
+          {caption}
+        </figcaption>
+      )
+    }
+  </div>
 </figure>
