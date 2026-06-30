@@ -17,11 +17,16 @@ const fieldNotes = (
     fieldNotes.length === 0 ? (
       <p class="mt-4 text-neutral-400">No field notes published yet.</p>
     ) : (
-      <ul class="mt-6 space-y-4">
+      <ul class="mt-6 space-y-6">
         {fieldNotes.map((entry) => (
           <li>
-            <span class="font-medium text-neutral-100">{entry.data.title}</span>
-            <p class="text-sm text-neutral-400">{entry.data.description}</p>
+            <a
+              href={`/field-notes/${entry.id}`}
+              class="font-medium text-neutral-100 hover:underline"
+            >
+              {entry.data.title}
+            </a>
+            <p class="mt-1 text-sm text-neutral-400">{entry.data.description}</p>
           </li>
         ))}
       </ul>

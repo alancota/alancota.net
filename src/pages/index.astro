@@ -1,14 +1,53 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Feature the most recent published field note.
+const featured = (
+  await getCollection('field-notes', ({ data }) =>
+    import.meta.env.PROD ? !data.draft : true
+  )
+).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())[0];
 ---
 
 <BaseLayout
   title="Home"
-  description="Engineering notebook and technical portfolio for Alan Cota."
+  description="Alan Cota — field notes, projects, and artifacts from work at the intersection of security, architecture, and customer-facing engineering."
 >
-  <h1 class="text-2xl font-semibold text-neutral-100">Alan Cota</h1>
-  <p class="mt-4 text-neutral-300">
-    Engineering notebook and technical portfolio. Bootstrap walking skeleton —
-    content to follow.
-  </p>
+  <section>
+    <h1 class="text-2xl font-semibold text-neutral-100">Hi, I’m Alan Cota.</h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-neutral-300">
+      I work at the intersection of security, architecture, and customer-facing
+      engineering. I’m interested in how complex systems become understandable,
+      useful, and valuable.
+    </p>
+  </section>
+
+  {
+    featured && (
+      <section class="mt-12 border-t border-neutral-800 pt-10">
+        <p class="text-xs font-medium uppercase tracking-wide text-neutral-500">
+          Latest Field Note
+        </p>
+        <h2 class="mt-3 text-xl font-semibold text-neutral-100">
+          <a href={`/field-notes/${featured.id}`} class="hover:underline">
+            {featured.data.title}
+          </a>
+        </h2>
+        <p class="mt-2 max-w-2xl text-neutral-400">{featured.data.description}</p>
+        <a
+          href={`/field-notes/${featured.id}`}
+          class="mt-4 inline-block text-sm text-neutral-300 hover:text-neutral-100"
+        >
+          Read the field note →
+        </a>
+      </section>
+    )
+  }
+
+  <nav class="mt-12 flex flex-wrap gap-x-6 gap-y-2 border-t border-neutral-800 pt-10 text-sm text-neutral-300">
+    <a href="/field-notes" class="hover:text-neutral-100">Field Notes</a>
+    <a href="/projects" class="hover:text-neutral-100">Projects</a>
+    <a href="/about" class="hover:text-neutral-100">About</a>
+  </nav>
 </BaseLayout>
