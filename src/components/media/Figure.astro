@@ -1,0 +1,38 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+// A single inline figure for Field Notes: photographs, diagrams, sketches.
+// Pass an imported image (so Astro's pipeline optimizes it) plus required alt.
+// `caption` is optional and only renders when provided — never auto-captioned.
+// `variant` opts the figure into the prose grid's wider columns.
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  variant?: 'text' | 'wide' | 'full';
+  priority?: boolean;
+}
+
+const { src, alt, caption, variant = 'text', priority = false } = Astro.props;
+
+const variantClass =
+  variant === 'wide' ? 'fig-wide' : variant === 'full' ? 'fig-full' : '';
+---
+
+<figure class={variantClass}>
+  <Image
+    src={src}
+    alt={alt}
+    layout={variant === 'full' ? 'full-width' : 'constrained'}
+    priority={priority}
+    class="w-full border border-line"
+  />
+  {
+    caption && (
+      <figcaption class="mt-3 font-sans text-sm leading-relaxed text-ink-faint">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

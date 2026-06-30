@@ -1,45 +1,29 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { projects } from '../../data/projects';
 
-// Placeholder cards. Detail pages are intentionally not built yet; these
-// describe the work at a high level until real case studies are published.
-const projects = [
-  {
-    name: 'Octopus',
-    kind: 'Concept',
-    description:
-      'Internal field tooling concept for reducing repetitive review work and improving technical preparation.',
-  },
-  {
-    name: 'BlindSpot Labs',
-    kind: 'Open source',
-    description: 'Open-source API security learning lab and demo environment.',
-  },
-  {
-    name: 'DataSpring Storage',
-    kind: 'Demo',
-    description:
-      'Fictional demo company used for realistic security and architecture scenarios.',
-  },
-];
+// Detail pages are intentionally not built yet; these cards describe the work
+// at a high level and invite future expansion (see src/data/projects.ts).
 ---
 
-<BaseLayout title="Projects" description="Concepts, labs, and demo environments.">
-  <h1 class="text-2xl font-semibold text-neutral-100">Projects</h1>
+<BaseLayout
+  title="Projects"
+  description="Concepts, labs, and demo environments — evidence of how the work holds up in practice."
+>
+  <div class="mx-auto w-full max-w-3xl">
+    <header class="max-w-2xl">
+      <h1 class="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+        Projects
+      </h1>
+      <p class="mt-4 font-serif text-lg leading-relaxed text-ink-muted">
+        Concepts, labs, and demo environments — evidence of how the thinking
+        holds up in practice. Detailed write-ups are on the way.
+      </p>
+    </header>
 
-  <ul class="mt-6 space-y-6">
-    {
-      projects.map((project) => (
-        <li class="rounded-lg border border-neutral-800 p-5">
-          <div class="flex items-baseline justify-between gap-4">
-            <span class="font-medium text-neutral-100">{project.name}</span>
-            <span class="text-xs uppercase tracking-wide text-neutral-500">
-              {project.kind}
-            </span>
-          </div>
-          <p class="mt-2 text-sm text-neutral-400">{project.description}</p>
-        </li>
-      ))
-    }
-  </ul>
+    <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </div>
 </BaseLayout>

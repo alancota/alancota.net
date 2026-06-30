@@ -2,17 +2,27 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About" description="About Alan Cota — senior security solutions architect based in Texas.">
-  <h1 class="text-2xl font-semibold text-neutral-100">About</h1>
-  <div class="mt-6 max-w-2xl space-y-6 text-lg leading-relaxed text-neutral-300">
-    <p>
-      I’m Alan Cota, a senior security solutions architect based in Texas. I’ve
-      spent my career helping teams understand complex technical systems, make
-      better decisions, and connect engineering work to business outcomes.
-    </p>
-    <p>
-      This site is where I collect field notes, projects, and artifacts from
-      that work — not as a résumé replacement, but as evidence of how I think.
-    </p>
+<BaseLayout
+  title="About"
+  description="About Alan Cota — senior security solutions architect based in Texas."
+>
+  <div class="mx-auto w-full max-w-2xl">
+    <p class="font-sans text-xs uppercase tracking-[0.18em] text-accent">About</p>
+    <h1 class="mt-5 font-serif text-3xl leading-tight tracking-tight text-ink sm:text-4xl">
+      Alan Cota
+    </h1>
+
+    <div class="prose mt-10">
+      <p>
+        I’m Alan Cota, a senior security solutions architect based in Texas.
+        I’ve spent my career helping teams understand complex technical systems,
+        make better decisions, and connect engineering work to business
+        outcomes.
+      </p>
+      <p>
+        This site is where I collect field notes, projects, and artifacts from
+        that work — not as a résumé replacement, but as evidence of how I think.
+      </p>
+    </div>
   </div>
 </BaseLayout>

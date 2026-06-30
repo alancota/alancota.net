@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Figure, Gallery, Video } from '../../components/media';
 
 // Drafts are excluded from production builds entirely — not public, not
 // linked, not generated (static sites have no access control).
@@ -21,27 +22,49 @@ const publishedOn = entry.data.publishDate.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
+  timeZone: 'UTC', // publishDate is a UTC midnight; render the calendar date as-authored
 });
+
+// Rough reading-time estimate from the raw body (~220 wpm).
+const words = entry.body?.trim().split(/\s+/).length ?? 0;
+const minutes = Math.max(1, Math.round(words / 220));
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description}>
-  <article class="mx-auto max-w-2xl">
-    <header>
-      <h1 class="text-3xl font-semibold leading-tight text-neutral-100">
+  <article class="mx-auto w-full max-w-4xl">
+    <header class="mx-auto w-full max-w-[42rem]">
+      <p class="font-sans text-xs uppercase tracking-[0.18em] text-accent">
+        Field Note
+      </p>
+      <h1 class="mt-5 font-serif text-3xl font-semibold leading-[1.15] tracking-tight text-ink sm:text-[2.75rem]">
         {entry.data.title}
       </h1>
-      <time
-        datetime={entry.data.publishDate.toISOString()}
-        class="mt-3 block text-sm text-neutral-500"
-      >
-        {publishedOn}
-      </time>
+      <p class="mt-6 font-serif text-xl leading-relaxed text-ink-muted">
+        {entry.data.description}
+      </p>
+      <div class="mt-6 flex items-center gap-2 font-sans text-sm text-ink-faint">
+        <time datetime={entry.data.publishDate.toISOString()}>{publishedOn}</time>
+        <span aria-hidden="true">·</span>
+        <span>{minutes} min read</span>
+      </div>
     </header>
 
-    <div
-      class="mt-10 space-y-6 text-lg leading-relaxed text-neutral-300 [&_h2]:mt-12 [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-neutral-100"
-    >
-      <Content />
+    <hr class="mx-auto mt-10 w-full max-w-[42rem] border-line" />
+
+    <div class="prose mt-10">
+      <Content components={{ Figure, Gallery, Video }} />
     </div>
+
+    <footer class="mx-auto mt-16 w-full max-w-[42rem] border-t border-line pt-8">
+      <a
+        href="/field-notes"
+        class="group inline-flex items-center gap-2 font-sans text-sm text-ink-muted transition-colors hover:text-accent"
+      >
+        <span class="transition-transform duration-200 group-hover:-translate-x-1">
+          ←
+        </span>
+        All field notes
+      </a>
+    </footer>
   </article>
 </BaseLayout>

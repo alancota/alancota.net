@@ -8,28 +8,56 @@ const fieldNotes = (
     import.meta.env.PROD ? !data.draft : true
   )
 ).sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
 ---
 
-<BaseLayout title="Field Notes" description="Short technical articles and observations.">
-  <h1 class="text-2xl font-semibold text-neutral-100">Field Notes</h1>
+<BaseLayout
+  title="Field Notes"
+  description="Short field notes from customer-facing engineering — realizations, observations, and the thinking behind the work."
+>
+  <div class="mx-auto w-full max-w-2xl">
+    <header>
+      <h1 class="font-serif text-3xl tracking-tight text-ink sm:text-4xl">
+        Field Notes
+      </h1>
+      <p class="mt-4 font-serif text-lg leading-relaxed text-ink-muted">
+        Short notes from customer-facing engineering — realizations, observations,
+        and the thinking behind the work.
+      </p>
+    </header>
 
-  {
-    fieldNotes.length === 0 ? (
-      <p class="mt-4 text-neutral-400">No field notes published yet.</p>
-    ) : (
-      <ul class="mt-6 space-y-6">
-        {fieldNotes.map((entry) => (
-          <li>
-            <a
-              href={`/field-notes/${entry.id}`}
-              class="font-medium text-neutral-100 hover:underline"
-            >
-              {entry.data.title}
-            </a>
-            <p class="mt-1 text-sm text-neutral-400">{entry.data.description}</p>
-          </li>
-        ))}
-      </ul>
-    )
-  }
+    {
+      fieldNotes.length === 0 ? (
+        <p class="mt-12 text-ink-muted">No field notes published yet.</p>
+      ) : (
+        <ul class="mt-12 divide-y divide-line border-t border-line">
+          {fieldNotes.map((entry) => (
+            <li>
+              <a
+                href={`/field-notes/${entry.id}`}
+                class="group block py-7 transition-colors"
+              >
+                <p class="font-sans text-xs uppercase tracking-[0.14em] text-ink-faint">
+                  {fmt(entry.data.publishDate)}
+                </p>
+                <h2 class="mt-2 font-serif text-xl text-ink transition-colors group-hover:text-accent sm:text-2xl">
+                  {entry.data.title}
+                </h2>
+                <p class="mt-2 font-serif leading-relaxed text-ink-muted">
+                  {entry.data.description}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
 </BaseLayout>

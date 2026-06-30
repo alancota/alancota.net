@@ -1,20 +1,241 @@
-@import "tailwindcss";
+/* Scope class detection to src/ — keeps stray class-like strings in repo docs
+   (e.g. .agents/**) out of the bundle, and speeds the build. */
+@import "tailwindcss" source("../");
 
-/* Dark-first baseline. The base layout hardcodes <html class="dark">; these
-   defaults set the dark background and foreground for every page. No theme
-   toggle in bootstrap. */
+/* ----------------------------------------------------------------------------
+   Design tokens
+   A warm, quiet, dark editorial system. The palette is a single warm-neutral
+   ramp plus one restrained sand accent — no second hue, no gradients. Exposed
+   through Tailwind's @theme so utilities (text-ink, bg-surface, border-line,
+   text-accent, font-serif…) stay consistent across every page.
+---------------------------------------------------------------------------- */
+@theme {
+  /* Warm neutral ramp (page is a warm near-black, not a cool slate) */
+  --color-base: #0e0d0b;
+  --color-surface: #151310;
+  --color-surface-hover: #1b1814;
+  --color-line: #2a2620;
+  --color-line-strong: #3a342b;
+
+  --color-ink: #ece7dd;
+  --color-ink-muted: #a8a094;
+  --color-ink-faint: #767065;
+
+  /* One accent: warm sand. Used sparingly — links on hover, focus, eyebrows. */
+  --color-accent: #cda575;
+  --color-accent-soft: #b9966c;
+
+  /* Type: a system serif for reading (the editorial signal), a system sans
+     for chrome/UI, mono for code. Zero web-font dependency by design. */
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+    Georgia, "Times New Roman", serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
+}
+
+/* ----------------------------------------------------------------------------
+   Base
+---------------------------------------------------------------------------- */
 :root {
   color-scheme: dark;
 }
 
-html.dark {
-  background-color: #0a0a0a;
-  color: #ededed;
+html {
+  background-color: var(--color-base);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
+}
+
+/* Warm text selection */
+::selection {
+  background-color: color-mix(in oklab, var(--color-accent) 28%, transparent);
+  color: var(--color-ink);
+}
+
+/* Visible, accent focus ring everywhere — keyboard users first */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Respect reduced-motion: kill the few transitions we use */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Prose — the reading experience for Field Notes and the About page.
+   No typography plugin: a focused, hand-tuned editorial stylesheet instead.
+   Serif body, comfortable measure, generous vertical rhythm.
+---------------------------------------------------------------------------- */
+.prose {
+  font-family: var(--font-serif);
+  color: var(--color-ink);
+  font-size: 1.1875rem; /* ~19px */
+  line-height: 1.75;
+  letter-spacing: 0.003em;
+
+  /* Full-bleed grid: text holds a ~68ch measure; media can opt into the
+     wider or full columns (.fig-wide / .fig-full) without overflowing on
+     small screens. This is what lets future Field Notes embed galleries,
+     side-by-side images, and full-width figures around frozen prose. */
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(0, 1fr)
+    [wide-start] minmax(0, 4rem)
+    [text-start] min(100%, 42rem) [text-end]
+    minmax(0, 4rem) [wide-end]
+    minmax(0, 1fr) [full-end];
+}
+
+.prose > * {
+  grid-column: text;
+}
+.prose > .fig-wide {
+  grid-column: wide;
+}
+.prose > .fig-full {
+  grid-column: full;
+}
+
+/* Paragraph rhythm — consistent spacing carries the article's short,
+   single-line paragraphs without making them feel orphaned. */
+.prose > * + * {
+  margin-top: 1.5em;
+}
+
+.prose img {
+  border-radius: 8px;
+}
+
+.prose p {
+  text-wrap: pretty;
+}
+
+/* First paragraph sits tight under the lead/title block */
+.prose > p:first-child {
+  margin-top: 0;
+}
+
+.prose h2,
+.prose h3 {
+  font-family: var(--font-serif);
+  color: var(--color-ink);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.5em;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2em;
+}
+
+.prose a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line-strong);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
+}
+
+.prose a:hover {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
+
+.prose strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--color-accent-soft);
+  padding-left: 1.25rem;
+  margin-left: 0;
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.4rem;
+}
+
+.prose li + li {
+  margin-top: 0.5em;
+}
+
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin-block: 3rem;
+  width: 40%;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Figures inside prose breathe a little more than paragraphs */
+.prose figure {
+  margin-top: 2.25em;
+  margin-bottom: 2.25em;
 }

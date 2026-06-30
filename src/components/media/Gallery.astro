@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+// A responsive grid of images. Content-driven: pass an `images` array rather
+// than hand-laying-out markup. `columns={2}` is the side-by-side case.
+// Defaults to the wider prose column so the grid has room to breathe.
+interface GalleryImage {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+  columns?: 2 | 3;
+  variant?: 'text' | 'wide' | 'full';
+}
+
+const { images, columns = 2, variant = 'wide' } = Astro.props;
+
+const variantClass =
+  variant === 'wide' ? 'fig-wide' : variant === 'full' ? 'fig-full' : '';
+const colClass = columns === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2';
+---
+
+<figure class={variantClass}>
+  <div class={`grid grid-cols-1 gap-3 ${colClass}`}>
+    {
+      images.map((img) => (
+        <figure class="m-0">
+          <Image src={img.src} alt={img.alt} class="w-full border border-line" />
+          {img.caption && (
+            <figcaption class="mt-2 font-sans text-xs leading-relaxed text-ink-faint">
+              {img.caption}
+            </figcaption>
+          )}
+        </figure>
+      ))
+    }
+  </div>
+</figure>
